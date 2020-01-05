@@ -1,105 +1,58 @@
 {
     "typeName": "Brianterry::Unicorn::Maker",
-    "description": "An example resource schema demonstrating some basic constructs and validation rules.",
+    "description": "A resource that creates unicorns.",
     "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
-    "definitions": {
-        "InitechDateFormat": {
-            "$comment": "Use the `definitions` block to provide shared resource property schemas",
-            "type": "string",
-            "format": "date-time"
-        },
-        "Memo": {
-            "type": "object",
-            "properties": {
-                "Heading": {
-                    "type": "string"
-                },
-                "Body": {
-                    "type": "string"
-                }
-            },
-            "additionalProperties": false
-        }
-    },
     "properties": {
-        "TPSCode": {
-            "description": "A TPS Code is automatically generated on creation and assigned as the unique identifier.",
-            "type": "string",
-            "pattern": "^[A-Z]{3,5}[0-9]{8}-[0-9]{4}$"
+        "UID": {
+            "description": "The ID of the majestic animal",
+            "type": "string"
         },
-        "Title": {
-            "description": "The title of the TPS report is a mandatory element.",
+        "Name": {
+            "description": "The name of the majestic animal",
             "type": "string",
-            "minLength": 20,
+            "minLength": 3,
             "maxLength": 250
         },
-        "CoverSheetIncluded": {
-            "description": "Required for all TPS Reports submitted after 2/19/1999",
-            "type": "boolean"
+        "Age": {
+            "description": "The age of the majestic animal",
+            "type": "number",
+            "minLength": 1,
+            "maxLength": 99
         },
-        "DueDate": {
-            "$ref": "#/definitions/InitechDateFormat"
-        },
-        "ApprovalDate": {
-            "$ref": "#/definitions/InitechDateFormat"
-        },
-        "Memo": {
-            "$ref": "#/definitions/Memo"
-        },
-        "SecondCopyOfMemo": {
-            "description": "In case you didn't get the first one.",
-            "$ref": "#/definitions/Memo"
-        },
-        "TestCode": {
+        "Color": {
+            "description": "The Color of the majestic animal",
             "type": "string",
-            "enum": [
-                "NOT_STARTED",
-                "CANCELLED"
-            ]
-        },
-        "Authors": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
+            "minLength": 3,
+            "maxLength": 250
         }
     },
     "additionalProperties": false,
     "required": [
-        "TestCode",
-        "Title"
+        "Name",
+        "Age",
+        "Color"
     ],
     "readOnlyProperties": [
-        "/properties/TPSCode"
+        "/properties/UID"
     ],
     "primaryIdentifier": [
-        "/properties/TPSCode"
+        "/properties/UID"
     ],
     "handlers": {
         "create": {
-            "permissions": [
-                "initech:CreateReport"
-            ]
+            "permissions": []
         },
         "read": {
-            "permissions": [
-                "initech:DescribeReport"
-            ]
+            "permissions": []
         },
         "update": {
-            "permissions": [
-                "initech:UpdateReport"
-            ]
+            "permissions": []
         },
         "delete": {
-            "permissions": [
-                "initech:DeleteReport"
-            ]
+            "permissions": []
         },
         "list": {
-            "permissions": [
-                "initech:ListReports"
-            ]
+            "permissions": []
         }
     }
 }
