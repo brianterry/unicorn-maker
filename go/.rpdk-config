@@ -1,5 +1,5 @@
 {
-    "typeName": "brianterry::Url::Shrtcode",
+    "typeName": "Brianterry::Unicorn::Maker",
     "language": "go",
     "runtime": "go1.x",
     "entrypoint": "handler",
