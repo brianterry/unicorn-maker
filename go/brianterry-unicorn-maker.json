@@ -15,7 +15,7 @@
         },
         "Age": {
             "description": "The age of the majestic animal",
-            "type": "number",
+            "type": "integer",
             "minLength": 1,
             "maxLength": 99
         },
