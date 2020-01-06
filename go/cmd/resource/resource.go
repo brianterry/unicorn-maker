@@ -13,7 +13,7 @@ import (
 
 // APIEndpoint is the crudcrud endpoint.
 // You can  obtain an endpoint by going to https://crudcrud.com.
-const APIEndpoint = "https://crudcrud.com/api/<YOUR ENDPOINT ID>/unicorns"
+const APIEndpoint = "https://crudcrud.com/api/64e82541a53643fdac7fdb7576feff19/unicorns"
 
 // A Unicorn represents a unicorn.
 type Unicorn struct {
@@ -54,6 +54,7 @@ func Create(req handler.Request, prevModel *Model, currentModel *Model) (handler
 		URL:    APIEndpoint,
 		Body:   bytes.NewBuffer(reqBody),
 		Action: "Create",
+		Model:  currentModel,
 	})
 	return response, nil
 }
@@ -128,9 +129,12 @@ func exist(req handler.Request, model *Model) bool {
 }
 
 func marshal(resource *Model) ([]byte, error) {
-	u := Unicorn{
-		Name:  *resource.Name.Value(),
-		Color: *resource.Color.Value(),
+	u := Unicorn{}
+	if resource.Name != nil {
+		u.Name = *resource.Name.Value()
+	}
+	if resource.Color != nil {
+		u.Color = *resource.Color.Value()
 	}
 	body, err := json.Marshal(&u)
 	if err != nil {
@@ -200,6 +204,7 @@ func makeReturn(input *RequestInput, resp *http.Response) handler.ProgressEvent 
 		}
 		result.Message = "Create Complete"
 		result.ResourceModel = unmarshal(&u)
+		result.ResourceModel = input.Model
 
 	case "Read":
 		u := Unicorn{}
