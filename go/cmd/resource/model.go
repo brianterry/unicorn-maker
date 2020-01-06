@@ -14,6 +14,5 @@ and executing the 'generate' command
 type Model struct {
 	UID   *encoding.String `json:"UID,omitempty"`
 	Name  *encoding.String `json:"Name,omitempty"`
-	Age   *encoding.Int    `json:"Age,omitempty"`
 	Color *encoding.String `json:"Color,omitempty"`
 }

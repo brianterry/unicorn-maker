@@ -13,12 +13,6 @@
             "minLength": 3,
             "maxLength": 250
         },
-        "Age": {
-            "description": "The age of the majestic animal",
-            "type": "integer",
-            "minLength": 1,
-            "maxLength": 99
-        },
         "Color": {
             "description": "The Color of the majestic animal",
             "type": "string",
@@ -29,7 +23,6 @@
     "additionalProperties": false,
     "required": [
         "Name",
-        "Age",
         "Color"
     ],
     "readOnlyProperties": [
