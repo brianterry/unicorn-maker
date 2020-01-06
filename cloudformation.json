@@ -32,6 +32,13 @@
             "Value": {
                 "Ref": "Unicorn"
             }
+        },
+        "ID2": {
+            "Description": "The ID of the unicorn.",
+            "Value": {
+                "Ref": "Unicorn"
+            }
         }
+
     }
 }
