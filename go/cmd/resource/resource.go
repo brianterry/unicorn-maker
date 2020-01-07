@@ -135,10 +135,10 @@ func validateInput(req handler.Request, model *Model) error {
 	if exist(req, model) {
 		return errors.New("Resource exist")
 	}
-	if model.Name != nil {
+	if model.Name == nil {
 		return errors.New("Name required")
 	}
-	if model.Color != nil {
+	if model.Color == nil {
 		return errors.New("Color required")
 	}
 	return nil
@@ -238,7 +238,13 @@ func makeReturn(input *RequestInput, resp *http.Response) handler.ProgressEvent 
 	case "List":
 		var unicorns []Unicorn
 
-		//setting to 1 to return an empty list if there is 0 unicorn
+		// The cloudformation service requires that an empty array
+		// be return if there are 0 unicorns.
+		// Because the model struct has the
+		// tag: omitempty, the value is omitted
+		// in the JSON return, causing an error.
+		// So, make a slice and set it to 1 to
+		//return an empty list if there is 0 unicorn
 		models := make([]interface{}, 1)
 		if err := json.NewDecoder(resp.Body).Decode(&unicorns); err != nil {
 			return handler.NewFailedEvent(err)
