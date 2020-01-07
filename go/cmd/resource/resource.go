@@ -45,6 +45,20 @@ func Create(req handler.Request, prevModel *Model, currentModel *Model) (handler
 	if exist(req, currentModel) {
 		return handler.ProgressEvent{}, errors.New("Resource exist")
 	}
+	if currentModel.Name != nil {
+		return handler.ProgressEvent{
+			OperationStatus: handler.Failed,
+			Message: "Name required",
+			HandlerErrorCode: handler.InvalidRequest,
+		}, nil
+	}
+	if currentModel.Color != nil {
+		return handler.ProgressEvent{
+			OperationStatus: handler.Failed,
+			Message: "Name required",
+			HandlerErrorCode: handler.InvalidRequest,
+		}, nil
+	}
 	reqBody, err := marshal(currentModel)
 	if err != nil {
 		return handler.ProgressEvent{}, err
@@ -128,15 +142,17 @@ func exist(req handler.Request, model *Model) bool {
 }
 
 func marshal(resource *Model) ([]byte, error) {
-	u := Unicorn{
-		Name:  *resource.Name.Value(),
-		Color: *resource.Color.Value(),
+	u := Unicorn{}
+	if resource.Name != nil {
+		u.Name = *resource.Name.Value()
+	}
+	if resource.Color != nil {
+		u.Color = *resource.Color.Value()
 	}
 	body, err := json.Marshal(&u)
 	if err != nil {
 		return nil, err
 	}
-
 	return body, nil
 }
 
@@ -169,7 +185,7 @@ func makeRequest(input *RequestInput) handler.ProgressEvent {
 		}
 	}
 	defer resp.Body.Close()
-	if resp.StatusCode == 404 {
+	if resp.StatusCode == 404 || resp.StatusCode == 400 {
 		return handler.ProgressEvent{
 			OperationStatus:  handler.Failed,
 			HandlerErrorCode: handler.NotFound,
