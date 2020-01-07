@@ -42,20 +42,10 @@ type RequestInput struct {
 
 // Create handles the Create event from the Cloudformation service.
 func Create(req handler.Request, prevModel *Model, currentModel *Model) (handler.ProgressEvent, error) {
-	if exist(req, currentModel) {
-		return handler.ProgressEvent{}, errors.New("Resource exist")
-	}
-	if currentModel.Name != nil {
+	if err := validateInput(req, currentModel); err != nil {
 		return handler.ProgressEvent{
-			OperationStatus: handler.Failed,
-			Message: "Name required",
-			HandlerErrorCode: handler.InvalidRequest,
-		}, nil
-	}
-	if currentModel.Color != nil {
-		return handler.ProgressEvent{
-			OperationStatus: handler.Failed,
-			Message: "Name required",
+			OperationStatus:  handler.Failed,
+			Message:          err.Error(),
 			HandlerErrorCode: handler.InvalidRequest,
 		}, nil
 	}
@@ -139,6 +129,19 @@ func exist(req handler.Request, model *Model) bool {
 		return true
 	}
 	return false
+}
+
+func validateInput(req handler.Request, model *Model) error {
+	if exist(req, model) {
+		return errors.New("Resource exist")
+	}
+	if model.Name != nil {
+		return errors.New("Name required")
+	}
+	if model.Color != nil {
+		return errors.New("Color required")
+	}
+	return nil
 }
 
 func marshal(resource *Model) ([]byte, error) {
