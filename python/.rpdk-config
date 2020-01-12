@@ -1,0 +1,10 @@
+{
+    "typeName": "Brianterry::Unicorn::Maker",
+    "language": "python37",
+    "runtime": "python3.7",
+    "entrypoint": "brianterry_unicorn_maker.handlers.resource",
+    "testEntrypoint": "brianterry_unicorn_maker.handlers.test_entrypoint",
+    "settings": {
+        "use_docker": false
+    }
+}
