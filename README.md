@@ -16,8 +16,13 @@ This example resource is built in the following languages:
 
 ## Getting started
 - Once you have set up your development environment, obtain a CrudCurd API key. Don't worry; the free version provides more than enough requests to play with this example.
+![Architecture](images/api.png)
 - Pick one of the language examples for this repo.
 - Add the API key to the source file.
+    - (Go) ![Architecture](images/go.png)
+    - (Python) ![Architecture](images/python.png)
+
+
 - Submit the resource using the Cloudformation CLI
 - After the provider has been registered, deploy it using the sample Cloudformation `cloudformation.json`
 
