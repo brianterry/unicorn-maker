@@ -29,7 +29,7 @@ This example resource is built in the following languages:
 - After the provider has been registered, deploy it using the sample Cloudformation `cloudformation.json`
 
 ## Contract test
-This example was create using Cloudformation's best practices. Therefore will pass all the Cloudformation CLI Contract test.
+This example was create using Cloudformation's best practices. Therefore, it will pass all of the Cloudformation CLI's Contract test.
 To run the contrast test, follow the directions the
 [documentation.](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/resource-type-cli-test.html)
 
