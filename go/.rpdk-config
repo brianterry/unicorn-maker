@@ -5,6 +5,6 @@
     "entrypoint": "handler",
     "testEntrypoint": "handler",
     "settings": {
-        "importpath": "github.com/brianterry/cloudformation-cli-quickstart/go"
+        "importpath": "github.com/brianterry/unicorn-maker/go"
     }
 }

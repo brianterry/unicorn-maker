@@ -6,7 +6,7 @@ import (
 
 	"github.com/aws-cloudformation/cloudformation-cli-go-plugin/cfn"
 	"github.com/aws-cloudformation/cloudformation-cli-go-plugin/cfn/handler"
-	"github.com/brianterry/cloudformation-cli-quickstart/go/cmd/resource"
+	"github.com/brianterry/unicorn-maker/go/cmd/resource"
 )
 
 /*
