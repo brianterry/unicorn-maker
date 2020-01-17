@@ -17,7 +17,7 @@ This example resource is built in the following languages:
 - Java (Comming soon)
 
 ## Getting started
-- Once you have set up your development environment, obtain a CrudCurd API key. Don't worry; the free version provides more than enough requests to play with this example.
+- Once you have set up your development environment, obtain a CrudCrud API key. Don't worry; the free version provides more than enough requests to play with this example.
 ![Architecture](images/api.png)
 - Pick one of the language examples for this repo.
 - Add the API key to the source file.
