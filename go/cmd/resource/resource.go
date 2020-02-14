@@ -46,7 +46,7 @@ func Create(req handler.Request, prevModel *Model, currentModel *Model) (handler
 		return handler.ProgressEvent{
 			OperationStatus:  handler.Failed,
 			Message:          err.Error(),
-			HandlerErrorCode: handler.InvalidRequest,
+			HandlerErrorCode: cloudformation.HandlerErrorCodeInvalidRequest,
 		}, nil
 	}
 	reqBody, err := marshal(currentModel)
@@ -68,12 +68,12 @@ func Read(req handler.Request, prevModel *Model, currentModel *Model) (handler.P
 		return handler.ProgressEvent{
 			OperationStatus:  handler.Failed,
 			Message:          "Resource not found",
-			HandlerErrorCode: handler.NotFound,
+			HandlerErrorCode: cloudformation.HandlerErrorCodeNotFound,
 		}, nil
 	}
 	response := makeRequest(&RequestInput{
 		Method: "GET",
-		URL:    APIEndpoint + "/" + *currentModel.UID.Value(),
+		URL:    APIEndpoint + "/" + aws.StringValue(currentModel.UID),
 		Action: "Read",
 	})
 	return response, nil
@@ -85,7 +85,7 @@ func Update(req handler.Request, prevModel *Model, currentModel *Model) (handler
 		return handler.ProgressEvent{
 			OperationStatus:  handler.Failed,
 			Message:          "Resource not found",
-			HandlerErrorCode: handler.NotFound,
+			HandlerErrorCode: cloudformation.HandlerErrorCodeNotFound,
 		}, nil
 	}
 	reqBody, err := marshal(currentModel)
@@ -94,7 +94,7 @@ func Update(req handler.Request, prevModel *Model, currentModel *Model) (handler
 	}
 	response := makeRequest(&RequestInput{
 		Method: "PUT",
-		URL:    APIEndpoint + "/" + *currentModel.UID.Value(),
+		URL:    APIEndpoint + "/" + aws.StringValue(currentModel.UID),
 		Body:   bytes.NewBuffer(reqBody),
 		Action: "Update",
 		Model:  currentModel,
@@ -106,7 +106,7 @@ func Update(req handler.Request, prevModel *Model, currentModel *Model) (handler
 func Delete(req handler.Request, prevModel *Model, currentModel *Model) (handler.ProgressEvent, error) {
 	response := makeRequest(&RequestInput{
 		Method: "DELETE",
-		URL:    APIEndpoint + "/" + *currentModel.UID.Value(),
+		URL:    APIEndpoint + "/" + aws.StringValue(currentModel.UID),
 		Body:   nil,
 		Action: "Delete",
 	})
@@ -147,10 +147,10 @@ func validateInput(req handler.Request, model *Model) error {
 func marshal(resource *Model) ([]byte, error) {
 	u := Unicorn{}
 	if resource.Name != nil {
-		u.Name = *resource.Name.Value()
+		u.Name = aws.StringValue(resource.Name)
 	}
 	if resource.Color != nil {
-		u.Color = *resource.Color.Value()
+		u.Color = aws.StringValue(resource.Color)
 	}
 	body, err := json.Marshal(&u)
 	if err != nil {
@@ -168,7 +168,7 @@ func makeRequest(input *RequestInput) handler.ProgressEvent {
 	if err != nil {
 		return handler.ProgressEvent{
 			OperationStatus:  handler.Failed,
-			HandlerErrorCode: handler.InvalidRequest,
+			HandlerErrorCode: cloudformation.HandlerErrorCodeInvalidRequest,
 			Message:          err.Error(),
 		}
 	}
@@ -183,7 +183,7 @@ func makeRequest(input *RequestInput) handler.ProgressEvent {
 	if err != nil {
 		return handler.ProgressEvent{
 			OperationStatus:  handler.Failed,
-			HandlerErrorCode: handler.NetworkFailure,
+			HandlerErrorCode: cloudformation.HandlerErrorCodeNetworkFailure,
 			Message:          err.Error(),
 		}
 	}
@@ -191,7 +191,7 @@ func makeRequest(input *RequestInput) handler.ProgressEvent {
 	if resp.StatusCode == 404 || resp.StatusCode == 400 {
 		return handler.ProgressEvent{
 			OperationStatus:  handler.Failed,
-			HandlerErrorCode: handler.NotFound,
+			HandlerErrorCode: cloudformation.HandlerErrorCodeNotFound,
 		}
 
 	}
@@ -200,9 +200,9 @@ func makeRequest(input *RequestInput) handler.ProgressEvent {
 
 func unmarshal(unicorn *Unicorn) *Model {
 	m := Model{
-		UID:   encoding.NewString(unicorn.ID),
-		Name:  encoding.NewString(unicorn.Name),
-		Color: encoding.NewString(unicorn.Color),
+		UID:   aws.String(unicorn.ID),
+		Name:  aws.String(unicorn.Name),
+		Color: aws.String(unicorn.Color),
 	}
 	return &m
 }
