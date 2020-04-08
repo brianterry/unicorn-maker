@@ -1,0 +1,11 @@
+{
+    "typeName": "Brianterry::Unicorn::Maker",
+    "language": "typescript",
+    "runtime": "nodejs12.x",
+    "entrypoint": "handlers.entrypoint",
+    "testEntrypoint": "handlers.testEntrypoint",
+    "settings": {
+        "useDocker": true,
+        "buildCommand": "npm i --unsafe-perm --no-optional && npm run build"
+    }
+}
