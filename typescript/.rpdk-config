@@ -6,6 +6,6 @@
     "testEntrypoint": "handlers.testEntrypoint",
     "settings": {
         "useDocker": true,
-        "buildCommand": "npm i --unsafe-perm --no-optional && npm run build"
+        "buildCommand": "npm ci --unsafe-perm --no-optional && npm run build"
     }
 }

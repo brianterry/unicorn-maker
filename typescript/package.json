@@ -2,30 +2,34 @@
   "name": "brianterry-unicorn-maker",
   "version": "1.0.0",
   "description": "Unicorn-maker is a complete example of a Cloudformation provider. This resource is built in multiple languages, to get you up and running creating Cloudformation custom resources.",
-  "main": "index.js",
+  "main": "dist/handlers.js",
   "files": [
     "dist"
   ],
   "scripts": {
     "build": "npx tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "pack-all": "npx npm-pack-all --output build/",
+    "start": "sam local start-lambda",
+    "test": "cfn test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eduardomourar/unicorn-maker.git"
+    "url": "git+https://github.com/brianterry/unicorn-maker.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/eduardomourar/unicorn-maker/issues"
+    "url": "https://github.com/brianterry/unicorn-maker/issues"
   },
-  "homepage": "https://github.com/eduardomourar/unicorn-maker#readme",
+  "homepage": "https://github.com/brianterry/unicorn-maker#readme",
   "dependencies": {
-    "cfn-rpdk": "https://github.com/eduardomourar/cloudformation-cli-typescript-plugin/releases/download/v0.0.1/cfn-cli-typescript-plugin-0.0.1.tar.gz"
+    "cfn-rpdk": "https://github.com/eduardomourar/cloudformation-cli-typescript-plugin/releases/download/v0.0.1/cfn-rpdk-0.0.1.tgz",
+    "tombok": "https://github.com/eduardomourar/tombok/releases/download/v0.0.1/tombok-0.0.1.tar.gz"
   },
   "devDependencies": {
     "@types/node": "^12.0.0",
-    "tombok": "https://github.com/eduardomourar/tombok/releases/download/v0.0.1/tombok-0.0.1.tar.gz",
+    "aws-sdk": "^2.656.0",
+    "npm-pack-all": "^1.11.1",
     "typescript": "^3.8.3"
   }
 }
