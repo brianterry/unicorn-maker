@@ -8,8 +8,10 @@
     "request": {
         "clientRequestToken": "4b90a7e4-b790-456b-a937-0cfdfa211dfe",
         "desiredResourceState": {
-            "state": "1"
+            "Color": "000",
+            "Name": "000"
         },
+        "previousResourceState": null,
         "logicalResourceIdentifier": null
     },
     "callbackContext": null

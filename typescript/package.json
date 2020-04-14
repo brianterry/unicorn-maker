@@ -8,28 +8,33 @@
   ],
   "scripts": {
     "build": "npx tsc",
-    "pack-all": "npx npm-pack-all --output build/",
+    "prepack": "npm run build",
     "start": "sam local start-lambda",
-    "test": "cfn test"
+    "test": "cfn test",
+    "submit": "npm run build && cfn submit"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/brianterry/unicorn-maker.git"
   },
-  "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/brianterry/unicorn-maker/issues"
   },
   "homepage": "https://github.com/brianterry/unicorn-maker#readme",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
   "dependencies": {
     "cfn-rpdk": "https://github.com/eduardomourar/cloudformation-cli-typescript-plugin/releases/download/v0.0.1/cfn-rpdk-0.0.1.tgz",
-    "tombok": "https://github.com/eduardomourar/tombok/releases/download/v0.0.1/tombok-0.0.1.tar.gz"
+    "node-fetch": "^3.0.0-beta.4"
   },
   "devDependencies": {
     "@types/node": "^12.0.0",
-    "aws-sdk": "^2.656.0",
-    "npm-pack-all": "^1.11.1",
     "typescript": "^3.8.3"
+  },
+  "optionalDependencies": {
+    "aws-sdk": "^2.656.0"
   }
 }
