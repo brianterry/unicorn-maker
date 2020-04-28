@@ -2,8 +2,10 @@
 
 Congratulations on starting development! Next steps:
 
-1. Write the JSON schema describing your resource, [brianterry-unicorn-maker.json](./brianterry-unicorn-maker.json)
-2. Implement your resource handlers in [handlers.ts](./src/handlers.ts)
+1. Check the JSON schema describing your resource, [brianterry-unicorn-maker.json](./brianterry-unicorn-maker.json)
+2. Run `npm install --optional`
+3. Implement/modify your resource handlers in [handlers.ts](./src/handlers.ts)
+4. Build the project with `npm run build`
 
 > Don't modify [models.ts](./src/models.ts) by hand, any modifications will be overwritten when the `generate` or `package` commands are run.
 

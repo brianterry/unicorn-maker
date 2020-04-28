@@ -5,7 +5,7 @@
     "entrypoint": "dist/handlers.entrypoint",
     "testEntrypoint": "dist/handlers.testEntrypoint",
     "settings": {
-        "useDocker": true,
-        "buildCommand": "npm run build && sam build --build-dir ./build --debug"
+        "useDocker": false,
+        "buildCommand": "npm run build && NPM_CONFIG_OPTIONAL=0 sam build --build-dir ./build --debug"
     }
 }

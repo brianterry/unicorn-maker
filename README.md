@@ -14,6 +14,8 @@ This example resource is built in the following languages:
 
 - Python
 
+- TypeScript
+
 - Java (Comming soon)
 
 ## Getting started
@@ -23,14 +25,14 @@ This example resource is built in the following languages:
 - Add the API key to the source file.
     - (Go) ![Architecture](images/go.png)
     - (Python) ![Architecture](images/python.png)
-
+    - (TypeScript) ![Architecture](images/typescript.png)
 
 - Submit the resource using the Cloudformation CLI
 - After the provider has been registered, deploy it using the sample Cloudformation `cloudformation.json`
 
 ## Contract test
 This example was create using Cloudformation's best practices. Therefore, it will pass all of the Cloudformation CLI's Contract test.
-To run the contrast test, follow the directions the
+To run the contract test, follow the directions in the
 [documentation.](https://docs.aws.amazon.com/cloudformation-cli/latest/userguide/resource-type-cli-test.html)
 
 

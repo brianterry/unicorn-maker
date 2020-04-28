@@ -27,7 +27,7 @@
     "npm": ">=6.0.0"
   },
   "dependencies": {
-    "cfn-rpdk": "https://github.com/eduardomourar/cloudformation-cli-typescript-plugin/releases/download/v0.0.1/cfn-rpdk-0.0.1.tgz",
+    "cfn-rpdk": "https://github.com/eduardomourar/cloudformation-cli-typescript-plugin/releases/download/v0.1.0/cfn-rpdk-0.1.0.tgz",
     "node-fetch": "^3.0.0-beta.4"
   },
   "devDependencies": {
@@ -35,6 +35,6 @@
     "typescript": "^3.8.3"
   },
   "optionalDependencies": {
-    "aws-sdk": "^2.656.0"
+    "aws-sdk": "^2.665.0"
   }
 }

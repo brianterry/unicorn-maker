@@ -14,7 +14,6 @@ import fetch, { Response } from 'node-fetch';
 
 import { ResourceModel } from './models';
 
-
 // Use this logger to forward log messages to CloudWatch Logs.
 const LOGGER = console;
 const CRUD_CRUD_ID = '<CRUDCRUD_API_ID_GOES_HERE>';
@@ -46,14 +45,14 @@ class Resource extends BaseResource<ResourceModel> {
         request: ResourceHandlerRequest<ResourceModel>,
         callbackContext: Map<string, any>,
     ): Promise<ProgressEvent> {
-        LOGGER.debug(`CREATE request ${JSON.stringify(request)}`);
+        LOGGER.debug('CREATE request', request);
         const model: ResourceModel = request.desiredResourceState;
         const progress: ProgressEvent<ResourceModel> = ProgressEvent.builder()
             .status(OperationStatus.InProgress)
             .resourceModel(model)
             .build() as ProgressEvent<ResourceModel>;
         const body: Object = model.toObject();
-        LOGGER.debug(`CREATE body ${JSON.stringify(body)}`);
+        LOGGER.debug('CREATE body', body);
         const response: Response = await fetch(API_ENDPOINT, {
             method: 'POST',
             headers: DEFAULT_HEADERS,
@@ -62,6 +61,7 @@ class Resource extends BaseResource<ResourceModel> {
         const jsonData: any = await checkedResponse(response);
         progress.resourceModel.UID = jsonData['_id'];
         progress.status = OperationStatus.Success;
+        LOGGER.log('CREATE progress', progress.toObject());
         return progress;
     }
 
@@ -71,7 +71,7 @@ class Resource extends BaseResource<ResourceModel> {
         request: ResourceHandlerRequest<ResourceModel>,
         callbackContext: Map<string, any>,
     ): Promise<ProgressEvent> {
-        LOGGER.debug(`UPDATE request ${JSON.stringify(request)}`);
+        LOGGER.debug('UPDATE request', request);
         const model: ResourceModel = request.desiredResourceState;
         const progress: ProgressEvent<ResourceModel> = ProgressEvent.builder()
             .status(OperationStatus.InProgress)
@@ -79,7 +79,7 @@ class Resource extends BaseResource<ResourceModel> {
             .build() as ProgressEvent<ResourceModel>;
         const body: any = model.toObject();
         delete body['UID'];
-        LOGGER.debug(`UPDATE body ${JSON.stringify(body)}`);
+        LOGGER.debug('UPDATE body', body);
         const response: Response = await fetch(`${API_ENDPOINT}/${model.UID}`, {
             method: 'PUT',
             headers: DEFAULT_HEADERS,
@@ -87,6 +87,7 @@ class Resource extends BaseResource<ResourceModel> {
         });
         await checkedResponse(response, model.UID);
         progress.status = OperationStatus.Success;
+        LOGGER.log('UPDATE progress', progress.toObject());
         return progress;
     }
 
@@ -96,7 +97,7 @@ class Resource extends BaseResource<ResourceModel> {
         request: ResourceHandlerRequest<ResourceModel>,
         callbackContext: Map<string, any>,
     ): Promise<ProgressEvent> {
-        LOGGER.debug(`DELETE request ${JSON.stringify(request)}`);
+        LOGGER.debug('DELETE request', request);
         const model: ResourceModel = request.desiredResourceState;
         const progress: ProgressEvent<ResourceModel> = ProgressEvent.builder()
             .status(OperationStatus.InProgress)
@@ -108,6 +109,7 @@ class Resource extends BaseResource<ResourceModel> {
         });
         await checkedResponse(response, model.UID);
         progress.status = OperationStatus.Success;
+        LOGGER.log('DELETE progress', progress.toObject());
         return progress;
     }
 
@@ -117,7 +119,7 @@ class Resource extends BaseResource<ResourceModel> {
         request: ResourceHandlerRequest<ResourceModel>,
         callbackContext: Map<string, any>,
     ): Promise<ProgressEvent> {
-        LOGGER.debug(`READ request ${JSON.stringify(request)}`);
+        LOGGER.debug('READ request', request);
         const model: ResourceModel = request.desiredResourceState;
         const response: Response = await fetch(`${API_ENDPOINT}/${model.UID}`, {
             method: 'GET',
@@ -126,10 +128,11 @@ class Resource extends BaseResource<ResourceModel> {
         const jsonData: any = await checkedResponse(response, model.UID);
         model.Name = jsonData['Name'];
         model.Color = jsonData['Color'];
-        const progress: ProgressEvent = ProgressEvent.builder()
+        const progress: ProgressEvent<ResourceModel> = ProgressEvent.builder()
             .status(OperationStatus.Success)
             .resourceModel(model)
-            .build();
+            .build() as ProgressEvent<ResourceModel>;
+        LOGGER.log('READ progress', progress.toObject());
         return progress;
     }
 
@@ -139,7 +142,7 @@ class Resource extends BaseResource<ResourceModel> {
         request: ResourceHandlerRequest<ResourceModel>,
         callbackContext: Map<string, any>,
     ): Promise<ProgressEvent> {
-        LOGGER.debug(`LIST request ${JSON.stringify(request)}`);
+        LOGGER.debug('LIST request', request);
         const response: Response = await fetch(API_ENDPOINT, {
             method: 'GET',
             headers: DEFAULT_HEADERS,
@@ -152,10 +155,11 @@ class Resource extends BaseResource<ResourceModel> {
                 Color: unicorn['Color'],
             })));
         });
-        const progress: ProgressEvent = ProgressEvent.builder()
+        const progress: ProgressEvent<ResourceModel> = ProgressEvent.builder()
             .status(OperationStatus.Success)
             .resourceModels(models)
-            .build();
+            .build() as ProgressEvent<ResourceModel>;
+        LOGGER.log('LIST progress', progress.toObject());
         return progress;
     }
 }
