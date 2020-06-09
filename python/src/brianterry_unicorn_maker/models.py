@@ -1,5 +1,7 @@
 # DO NOT modify this file by hand, changes will be overwritten
+import sys
 from dataclasses import dataclass
+from inspect import getmembers, isclass
 from typing import (
     AbstractSet,
     Any,
@@ -13,9 +15,11 @@ from typing import (
 )
 
 from cloudformation_cli_python_lib.interface import (
+    BaseModel,
     BaseResourceHandlerRequest,
-    BaseResourceModel,
 )
+from cloudformation_cli_python_lib.recast import recast_object
+from cloudformation_cli_python_lib.utils import deserialize_list
 
 T = TypeVar("T")
 
@@ -34,7 +38,7 @@ class ResourceHandlerRequest(BaseResourceHandlerRequest):
 
 
 @dataclass
-class ResourceModel(BaseResourceModel):
+class ResourceModel(BaseModel):
     UID: Optional[str]
     Name: Optional[str]
     Color: Optional[str]
@@ -46,6 +50,8 @@ class ResourceModel(BaseResourceModel):
     ) -> Optional["_ResourceModel"]:
         if not json_data:
             return None
+        dataclasses = {n: o for n, o in getmembers(sys.modules[__name__]) if isclass(o)}
+        recast_object(cls, json_data, dataclasses)
         return cls(
             UID=json_data.get("UID"),
             Name=json_data.get("Name"),
