@@ -1,0 +1,40 @@
+{
+  "name": "brianterry-unicorn-maker",
+  "version": "1.0.0",
+  "description": "Unicorn-maker is a complete example of a Cloudformation provider. This resource is built in multiple languages, to get you up and running creating Cloudformation custom resources.",
+  "main": "dist/handlers.js",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "npx tsc",
+    "prepack": "npm run build",
+    "start": "sam local start-lambda",
+    "test": "cfn test",
+    "submit": "npm run build && cfn submit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brianterry/unicorn-maker.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/brianterry/unicorn-maker/issues"
+  },
+  "homepage": "https://github.com/brianterry/unicorn-maker#readme",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "dependencies": {
+    "cfn-rpdk": "https://github.com/eduardomourar/cloudformation-cli-typescript-plugin/releases/download/v0.1.0/cfn-rpdk-0.1.0.tgz",
+    "node-fetch": "^3.0.0-beta.4"
+  },
+  "devDependencies": {
+    "@types/node": "^12.0.0",
+    "typescript": "^3.8.3"
+  },
+  "optionalDependencies": {
+    "aws-sdk": "^2.665.0"
+  }
+}
