@@ -1,2 +1,2 @@
-cloudformation-cli-python-lib==0.0.1
+cloudformation-cli-python-lib==2.0.0
 requests==2.22
