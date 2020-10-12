@@ -5,8 +5,8 @@
     "entrypoint": "handler",
     "testEntrypoint": "handler",
     "settings": {
-        "importpath": "github.com/brianterry/unicorn-maker/go",
-        "protocolVersion": "1.0",
-        "pluginVersion": "0.1.4"
+        "import_path": "github.com/brianterry/unicorn-maker/go",
+        "protocolVersion": "2.0.0",
+        "pluginVersion": "2.0.1"
     }
 }
