@@ -5,17 +5,20 @@
     "properties": {
         "UID": {
             "description": "The ID of the majestic animal",
-            "type": "string"
+            "type": "string",
+            "pattern": "^[a-z0-9]+$"
         },
         "Name": {
             "description": "The name of the majestic animal",
             "type": "string",
+            "pattern": "^[a-zA-Z0-9]+$",
             "minLength": 3,
             "maxLength": 250
         },
         "Color": {
             "description": "The Color of the majestic animal",
             "type": "string",
+            "pattern": "^[a-zA-Z0-9]+$",
             "minLength": 3,
             "maxLength": 250
         }
