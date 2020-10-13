@@ -37,21 +37,31 @@ const checkedResponse = async (response: Response, uid?: string): Promise<any> =
     return JSON.parse(data);
 }
 
+interface CallbackContext extends Record<string, any> {}
+
 class Resource extends BaseResource<ResourceModel> {
 
+    /**
+     * CloudFormation invokes this handler when the resource is initially created
+     * during stack create operations.
+     *
+     * @param session Current AWS session passed through from caller
+     * @param request The request object for the provisioning request passed to the implementor
+     * @param callbackContext Custom context object to allow the passing through of additional
+     * state or metadata between subsequent retries
+     */
     @handlerEvent(Action.Create)
     public async create(
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModel>,
-        callbackContext: Map<string, any>,
+        callbackContext: CallbackContext,
     ): Promise<ProgressEvent> {
         LOGGER.debug('CREATE request', request);
         const model: ResourceModel = request.desiredResourceState;
-        const progress: ProgressEvent<ResourceModel> = ProgressEvent.builder()
-            .status(OperationStatus.InProgress)
-            .resourceModel(model)
-            .build() as ProgressEvent<ResourceModel>;
-        const body: Object = model.toObject();
+        if (model.UID) throw new exceptions.InvalidRequest("Create unicorn with readOnly property");
+
+        const progress = ProgressEvent.progress<ProgressEvent<ResourceModel, CallbackContext>>(model);
+        const body: Object = { ...model };
         LOGGER.debug('CREATE body', body);
         const response: Response = await fetch(API_ENDPOINT, {
             method: 'POST',
@@ -61,23 +71,29 @@ class Resource extends BaseResource<ResourceModel> {
         const jsonData: any = await checkedResponse(response);
         progress.resourceModel.UID = jsonData['_id'];
         progress.status = OperationStatus.Success;
-        LOGGER.log('CREATE progress', progress.toObject());
+        LOGGER.log('CREATE progress', { ...progress });
         return progress;
     }
 
+    /**
+     * CloudFormation invokes this handler when the resource is updated
+     * as part of a stack update operation.
+     *
+     * @param session Current AWS session passed through from caller
+     * @param request The request object for the provisioning request passed to the implementor
+     * @param callbackContext Custom context object to allow the passing through of additional
+     * state or metadata between subsequent retries
+     */
     @handlerEvent(Action.Update)
     public async update(
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModel>,
-        callbackContext: Map<string, any>,
+        callbackContext: CallbackContext,
     ): Promise<ProgressEvent> {
         LOGGER.debug('UPDATE request', request);
         const model: ResourceModel = request.desiredResourceState;
-        const progress: ProgressEvent<ResourceModel> = ProgressEvent.builder()
-            .status(OperationStatus.InProgress)
-            .resourceModel(model)
-            .build() as ProgressEvent<ResourceModel>;
-        const body: any = model.toObject();
+        const progress = ProgressEvent.progress<ProgressEvent<ResourceModel, CallbackContext>>(model);
+        const body: any = { ...model };
         delete body['UID'];
         LOGGER.debug('UPDATE body', body);
         const response: Response = await fetch(`${API_ENDPOINT}/${model.UID}`, {
@@ -87,37 +103,53 @@ class Resource extends BaseResource<ResourceModel> {
         });
         await checkedResponse(response, model.UID);
         progress.status = OperationStatus.Success;
-        LOGGER.log('UPDATE progress', progress.toObject());
+        LOGGER.log('UPDATE progress', { ...progress });
         return progress;
     }
 
+    /**
+     * CloudFormation invokes this handler when the resource is deleted, either when
+     * the resource is deleted from the stack as part of a stack update operation,
+     * or the stack itself is deleted.
+     *
+     * @param session Current AWS session passed through from caller
+     * @param request The request object for the provisioning request passed to the implementor
+     * @param callbackContext Custom context object to allow the passing through of additional
+     * state or metadata between subsequent retries
+     */
     @handlerEvent(Action.Delete)
     public async delete(
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModel>,
-        callbackContext: Map<string, any>,
+        callbackContext: CallbackContext,
     ): Promise<ProgressEvent> {
         LOGGER.debug('DELETE request', request);
         const model: ResourceModel = request.desiredResourceState;
-        const progress: ProgressEvent<ResourceModel> = ProgressEvent.builder()
-            .status(OperationStatus.InProgress)
-            .resourceModel(model)
-            .build() as ProgressEvent<ResourceModel>;
+        const progress = ProgressEvent.progress<ProgressEvent<ResourceModel, CallbackContext>>();
         const response: Response = await fetch(`${API_ENDPOINT}/${model.UID}`, {
             method: 'DELETE',
             headers: DEFAULT_HEADERS,
         });
         await checkedResponse(response, model.UID);
         progress.status = OperationStatus.Success;
-        LOGGER.log('DELETE progress', progress.toObject());
+        LOGGER.log('DELETE progress', { ...progress });
         return progress;
     }
 
+    /**
+     * CloudFormation invokes this handler as part of a stack update operation when
+     * detailed information about the resource's current state is required.
+     *
+     * @param session Current AWS session passed through from caller
+     * @param request The request object for the provisioning request passed to the implementor
+     * @param callbackContext Custom context object to allow the passing through of additional
+     * state or metadata between subsequent retries
+     */
     @handlerEvent(Action.Read)
     public async read(
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModel>,
-        callbackContext: Map<string, any>,
+        callbackContext: CallbackContext,
     ): Promise<ProgressEvent> {
         LOGGER.debug('READ request', request);
         const model: ResourceModel = request.desiredResourceState;
@@ -132,15 +164,24 @@ class Resource extends BaseResource<ResourceModel> {
             .status(OperationStatus.Success)
             .resourceModel(model)
             .build() as ProgressEvent<ResourceModel>;
-        LOGGER.log('READ progress', progress.toObject());
+        LOGGER.log('READ progress', { ...progress });
         return progress;
     }
 
+    /**
+     * CloudFormation invokes this handler when summary information about multiple
+     * resources of this resource provider is required.
+     *
+     * @param session Current AWS session passed through from caller
+     * @param request The request object for the provisioning request passed to the implementor
+     * @param callbackContext Custom context object to allow the passing through of additional
+     * state or metadata between subsequent retries
+     */
     @handlerEvent(Action.List)
     public async list(
         session: Optional<SessionProxy>,
         request: ResourceHandlerRequest<ResourceModel>,
-        callbackContext: Map<string, any>,
+        callbackContext: CallbackContext,
     ): Promise<ProgressEvent> {
         LOGGER.debug('LIST request', request);
         const response: Response = await fetch(API_ENDPOINT, {
@@ -149,17 +190,18 @@ class Resource extends BaseResource<ResourceModel> {
         });
         const jsonData: any[] = await checkedResponse(response);
         const models: Array<ResourceModel> = jsonData.map((unicorn: any) => {
-            return new ResourceModel(new Map(Object.entries({
+            LOGGER.log("\n\nHERE", unicorn, "\n\n");
+            return new ResourceModel({
                 UID: unicorn['_id'],
                 Name: unicorn['Name'],
                 Color: unicorn['Color'],
-            })));
+            });
         });
         const progress: ProgressEvent<ResourceModel> = ProgressEvent.builder()
             .status(OperationStatus.Success)
             .resourceModels(models)
             .build() as ProgressEvent<ResourceModel>;
-        LOGGER.log('LIST progress', progress.toObject());
+        LOGGER.log('LIST progress test logger', { ...progress });
         return progress;
     }
 }
