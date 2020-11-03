@@ -7,9 +7,7 @@
     "action": "LIST",
     "request": {
         "clientRequestToken": "4b90a7e4-b790-456b-a937-0cfdfa211dfe",
-        "desiredResourceState": {
-            "state": "1"
-        },
+        "desiredResourceState": {},
         "logicalResourceIdentifier": "MyResource"
     },
     "callbackContext": null
