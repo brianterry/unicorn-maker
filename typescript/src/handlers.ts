@@ -22,7 +22,7 @@ interface Unicorn {
 }
 
 class Resource extends BaseResource<ResourceModel> {
-    // APIEndpoint is the crudcrud endpoint.
+    // API_ENDPOINT is the crudcrud endpoint.
     // You can  obtain an endpoint by going to https://crudcrud.com.
     static readonly API_ENDPOINT = `https://crudcrud.com/api/<Your API ID>/unicorns`;
     static readonly DEFAULT_HEADERS = {
