@@ -3,19 +3,22 @@
     "description": "A resource that creates unicorns.",
     "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
     "properties": {
-        "UID": {
+        "Id": {
             "description": "The ID of the majestic animal",
+            "pattern": "^[a-z0-9]+$",
             "type": "string"
         },
         "Name": {
             "description": "The name of the majestic animal",
             "type": "string",
+            "pattern": "^[a-zA-Z0-9]+$",
             "minLength": 3,
             "maxLength": 250
         },
         "Color": {
-            "description": "The Color of the majestic animal",
+            "description": "The color of the majestic animal",
             "type": "string",
+            "pattern": "^[a-zA-Z0-9]+$",
             "minLength": 3,
             "maxLength": 250
         }
@@ -26,10 +29,10 @@
         "Color"
     ],
     "readOnlyProperties": [
-        "/properties/UID"
+        "/properties/Id"
     ],
     "primaryIdentifier": [
-        "/properties/UID"
+        "/properties/Id"
     ],
     "handlers": {
         "create": {
