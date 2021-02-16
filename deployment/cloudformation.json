@@ -1,0 +1,49 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "The template creates a new unicorn",
+    "Parameters": {
+        "Name": {
+            "Description": "The name of the majestic animal",
+            "Type": "String",
+            "Default": "Deva"
+        },
+        "Color": {
+            "Description": "The Color of the majestic animal",
+            "Type": "String",
+            "Default": "Pink"
+        }
+    },
+    "Resources": {
+        "Unicorn": {
+            "Type": "Brianterry::Unicorn::Maker",
+            "Properties": {
+                "Name": {
+                    "Ref": "Name"
+                },
+                "Color": {
+                    "Ref": "Color"
+                }
+            }
+        }
+    },
+    "Outputs": {
+        "ID": {
+            "Description": "The ID of the unicorn.",
+            "Value": {
+                "Ref": "Unicorn"
+            }
+        },
+        "Name": {
+            "Description": "The color of the unicorn",
+            "Value": {
+                "Ref": "Name"
+            }
+        },
+        "Color": {
+            "Description": "The color of the unicorn",
+            "Value": {
+                "Ref": "Color"
+            }
+        }
+    }
+}
