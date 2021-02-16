@@ -19,9 +19,13 @@ Cool, right?  How do I get started? Wow, you are full of great questions. I buil
 
 # Getting Started
 
-## Step 1: prerequisites
-You can build the resource type with one of four languages: Java, Go, Python, and TypeScript. So I will assume that you have installed the language prerequisites you will be using to create your resource type.
+## Step 0: Prerequisites
+You will need:
+- The prerequisites for the language you will be using to create your resource type installed
+- An [AWS account](https://aws.amazon.com/)
+- The [AWS CLI](https://aws.amazon.com/cli/) installed on your system
 
+## Step 1: Install AWS Cloudformation CLI
 First, start by installing the AWS Cloudformation CLI and the language plugins.
 
 Although not necessary, I recommend creating a Python virtual environment. It makes getting started a little easier:
@@ -59,7 +63,8 @@ Let's setup the backend. Start by going to [https://crudcrud.com/](https://crudc
 ![Architecture](images/crudcrud-key.png)
 
 
-Copy API key, you well need this later.
+Copy API key, you well need this in the next step.
+
 
 ## Step 4: Build the Resource Type
 Now, it's time to build and deploy the provider.
@@ -68,7 +73,14 @@ Begin by picking a language and change directory into that project:
 
     (env)$ cd language-folder
 
+Add the API key to the source file.
+- (Go) ![Architecture](images/go.png)
+- (Python) ![Architecture](images/python.png)
+- (TypeScript) ![Architecture](images/typescript.png)
+
+
 Because the repo contains an example in each language, the build process is different between them. Please follow each project's directions to learn more about the prerequisites and how to perform a build.
+
 
 ## Step 5: Submit the Resource Type
 Once the resource type is built, submit it using the CloudFormation CLI tool:
@@ -80,17 +92,33 @@ After a few minutes, the `Brianterry::Unicorn::Maker` resource will be displayed
 ![Architecture](images/console.png)
 
 ## Step 6: Create a Unicorn
-Using the [CloudFormation](deployment/cloudformation.json) template in the `deployment` folder, create new stack that contains a uncorn:
+Using the [CloudFormation](deployment/cloudformation.json) template in the deployment folder, create new stack that contains a uncorn:
 
 The following command creates a new stack by using the cloudformation.json template.
 
     (env)$ aws cloudformation deploy --template deployment/cloudformation.json --stack-name my-unicorn
 
-Now, jump over to your [https://crudcrud.com/](https://crudcrud.com/) to see your new unicorn!
+Now, jump over to your crubcrud dashboard at `https://crudcrud.com/api/<Your API KEY>/unicorns` to see your new unicorn!
 
+![unicorn](images/dashboard.png)
 
+## Step 7: Update your Unicorn
+CloudFormation handles the lifecycle of our unicorns. So lets change the name of the unicorn by updating the CloudFormation stack.
+
+The following command updates the stack and changes the unicorn name
+
+    (env)$ aws cloudformation update-stack --use-previous-template --stack-name my-unicorn --parameters ParameterKey=Name,ParameterValue=Valeri
+
+jump over to your crubcrud dashboard at `https://crudcrud.com/api/<Your API KEY>/unicorns` to see your updated unicorn!
+
+![unicorn](images/dashboard2.png)
+## Step 8: Delete your Unicorn
+When you delete an AWS CloudFormation Stack, the resource is deleted too.
+
+Let's delete the stack and delete the unicorn
+
+    (env)$ aws cloudformation delete-stack --stack-name my-unicorn
 # License
-
 Unicorn maker is released under the MIT license. See [LICENSE.txt](https://github.com/brianterry/unicorn-maker/blob/master/LICENSE)
 
 
