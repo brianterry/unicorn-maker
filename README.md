@@ -1,14 +1,10 @@
-![cobra logo](https://cloud.githubusercontent.com/assets/173412/10886352/ad566232-814f-11e5-9cd0-aa101788c117.png)
+![Unicorn logo](images/unicorn.png)
 
-The unicorn-maker project is a repository that contains an end-to-end example of an AWS Cloudformation resource provider.
+The unicorn-maker project is a repository that contains an end-to-end example of an AWS Cloudformation resource type.
 
-The CloudFormation Command Line Interface (CLI) is an open-source tool that enables you to develop and test AWS and third-party resources and register them for use in AWS CloudFormation. Begin by going to the documentation guide and setting up your build environment.
+The CloudFormation Command Line Interface (CLI) is an open-source tool that enables you to develop and test AWS and third-party resource types and register them for use in AWS CloudFormation.
 
-[![](https://img.shields.io/github/workflow/status/spf13/cobra/Test?longCache=tru&label=Test&logo=github%20actions&logoColor=fff)](https://github.com/spf13/cobra/actions?query=workflow%3ATest)
-[![Build Status](https://travis-ci.org/spf13/cobra.svg "Travis CI status")](https://travis-ci.org/spf13/cobra)
-[![GoDoc](https://godoc.org/github.com/spf13/cobra?status.svg)](https://godoc.org/github.com/spf13/cobra)
-[![Go Report Card](https://goreportcard.com/badge/github.com/spf13/cobra)](https://goreportcard.com/report/github.com/spf13/cobra)
-[![Slack](https://img.shields.io/badge/Slack-cobra-brightgreen)](https://gophers.slack.com/archives/CD3LP1199)
+
 
 
 # Overview
@@ -23,22 +19,19 @@ Cool, right?  How do I get started? Wow, you are full of great questions. I buil
 
 # Getting Started
 
+## Step 1: prerequisites
+You can build the resource type with one of four languages: Java, Go, Python, and TypeScript. So I will assume that you have installed the language prerequisites you will be using to create your resource type.
+
 First, start by installing the AWS Cloudformation CLI and the language plugins.
 
 Although not necessary, I recommend creating a Python virtual environment. It makes getting started a little easier.
 
-    $ python3 -m venv env
-    $ source source env/bin/activate
-
-
-Now that you have your enviroment setup, clone the is repo.
-
     git clone https://github.com/brianterry/unicorn-maker.git
 
-## Choose your path
-What's great about creating an AWS CloudFormation provider is you can write it in JAVA, Go, Python, or Javascript.
+## Step 2: Choose Your Path
+What's great about creating an AWS CloudFormation provider is you can write it in JAVA, Go, Python, TypeScript.
 
-In this repo, you will find a folder that contains an example resource built in the following languages:
+In this repo, you will find a folder that contains an example resource type built in the following languages:
 
 [Go](https://github.com/brianterry/unicorn-maker/tree/master/go)
 
@@ -53,25 +46,47 @@ No matter what path you choose, the resource design is the same. That way, you c
 For example, if you are good at Go and want to learn how to create a Python provider, compare the projects.
 
 
-## Backend service
+## Step 3: Configure The Backend Service
+This is provider uses [CrudCrud](https://crudcrud.com/) as the backend, enabling you to focus on provider creation instead of standing up an API.
 
-A flag is a way to modify the behavior of a command. Cobra supports
-fully POSIX-compliant flags as well as the Go [flag package](https://golang.org/pkg/flag/).
-A Cobra command can define flags that persist through to children commands
-and flags that are only available to that command.
+Let's setup the backend. Start by going to [https://crudcrud.com/](https://crudcrud.com/) and obtain a CrudCrud API key. Don't worry—the free version provides more than enough requests to play with this example.
 
-In the example above, 'port' is the flag.
-
-Flag functionality is provided by the [pflag
-library](https://github.com/spf13/pflag), a fork of the flag standard library
-which maintains the same interface while adding POSIX compliance.
+![Architecture](images/crudcrud-key.png)
 
 
+Copy API key, you well need this later.
+
+## Step 4: Build the Resource Type
+Now, it's time to build and deploy the provider.
+
+Begin by picking a language and change directory into that project:
+
+    (env)$ cd language-folder
+
+Because the repo contains an example in each language, the build process is different between them. Please follow each project's directions to learn more about the prerequisites and how to perform a build.
+
+## Step 5: Submit the Resource Type
+Once the resource type is built, submit it using the CloudFormation CLI tool:
+
+    (env)$ cfn submit
+
+After a few minutes, the `Brianterry::Unicorn::Maker` resource will be displayed in your AWS CloudFormation console under private Resource types:
+
+![Architecture](images/console.png)
+
+## Step 6: Create a Unicorn
+Using the [CloudFormation](deployment/cloudformation.json) template in the `deployment` folder, create new stack that contains a uncorn:
+
+The following command creates a new stack by using the cloudformation.json template.
+
+    (env)$ aws cloudformation deploy --template deployment/cloudformation.json --stack-name my-unicorn
+
+Now, jump over to your [https://crudcrud.com/](https://crudcrud.com/) to see your new unicorn!
 
 
 # License
 
-Cobra is released under the Apache 2.0 license. See [LICENSE.txt](https://github.com/spf13/cobra/blob/master/LICENSE.txt)
+Unicorn maker is released under the MIT license. See [LICENSE.txt](https://github.com/brianterry/unicorn-maker/blob/master/LICENSE)
 
 
 
