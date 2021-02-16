@@ -44,7 +44,7 @@ In this repo, you will find a folder that contains an example resource type buil
 
 [TypeScript](https://github.com/brianterry/unicorn-maker/tree/master/typescript)
 
-Java (Comming soon)
+Java (Coming soon)
 
 No matter what path you choose, the resource design is the same. That way, you can use this project as a "rosetta stone."
 
