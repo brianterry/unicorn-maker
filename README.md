@@ -127,6 +127,7 @@ Let's delete the stack and delete the unicorn
 
 
 crudcrud dashboard:
+
 ![Dashboard](images/dashboard2.png)
 # License
 Unicorn maker is released under the MIT license. See [LICENSE.txt](https://github.com/brianterry/unicorn-maker/blob/master/LICENSE)
