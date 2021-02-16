@@ -3,10 +3,13 @@
 ._*
 
 # our logs
-rpdk.log
+rpdk.log*
 
 #compiled file
 bin/
 
 #vender
 vender/
+
+# contains credentials
+sam-tests/
