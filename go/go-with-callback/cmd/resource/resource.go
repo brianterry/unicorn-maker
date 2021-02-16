@@ -15,7 +15,7 @@ import (
 
 // APIEndpoint is the crudcrud endpoint.
 // You can  obtain an endpoint by going to https://crudcrud.com.
-var APIEndpoint string = fmt.Sprintf("https://crudcrud.com/api/%s/unicorns", "ed9e3091188f4f3e82258b3990b5b0b5")
+var APIEndpoint string = fmt.Sprintf("https://crudcrud.com/api/%s/unicorns", "<Your API KEY>")
 
 // A Unicorn represents a unicorn.
 type Unicorn struct {

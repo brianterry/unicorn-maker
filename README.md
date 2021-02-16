@@ -99,6 +99,7 @@ The following command creates a new stack by using the cloudformation.json templ
     (env)$ aws cloudformation deploy --template deployment/cloudformation.json --stack-name my-unicorn
 
 You can view the stack's process in your AWS CloudFormation Console
+
 ![Console](images/console3.png)
 
 Now, jump over to your crubcrud dashboard at `https://crudcrud.com/api/<Your API KEY>/unicorns` to see your new unicorn!
@@ -121,6 +122,12 @@ When you delete an AWS CloudFormation Stack, the resource is deleted too.
 Let's delete the stack and delete the unicorn
 
     (env)$ aws cloudformation delete-stack --stack-name my-unicorn
+
+![Console](images/console4.png)
+
+
+crudcrud dashboard:
+![Dashboard](images/dashboard2.png)
 # License
 Unicorn maker is released under the MIT license. See [LICENSE.txt](https://github.com/brianterry/unicorn-maker/blob/master/LICENSE)
 
