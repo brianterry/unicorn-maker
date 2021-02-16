@@ -60,7 +60,7 @@ This provider uses [CrudCrud](https://crudcrud.com/) as the backend, enabling yo
 
 Let's setup the backend. Start by going to [https://crudcrud.com/](https://crudcrud.com/) and obtain a CrudCrud API key. Don't worry—the free version provides more than enough requests to play with this example.
 
-![Architecture](images/crudcrud-key.png)
+![crudcrud](images/crudcrud-key.png)
 
 
 Copy API key, you well need this in the next step.
@@ -74,9 +74,9 @@ Begin by picking a language and change directory into that project:
     (env)$ cd language-folder
 
 Add the API key to the source file.
-- (Go) ![Architecture](images/go.png)
-- (Python) ![Architecture](images/python.png)
-- (TypeScript) ![Architecture](images/typescript.png)
+- (Go) ![Go](images/go.png)
+- (Python) ![Python](images/python.png)
+- (TypeScript) ![TypeScript](images/typescript.png)
 
 
 Because the repo contains an example in each language, the build process is different between them. Please follow each project's directions to learn more about the prerequisites and how to perform a build.
@@ -89,7 +89,7 @@ Once the resource type is built, submit it using the CloudFormation CLI tool:
 
 After a few minutes, the `Brianterry::Unicorn::Maker` resource will be displayed in your AWS CloudFormation console under private Resource types:
 
-![Architecture](images/console.png)
+![Console](images/console.png)
 
 ## Step 6: Create a Unicorn
 Using the [CloudFormation](deployment/cloudformation.json) template in the deployment folder, create new stack that contains a uncorn:
@@ -98,9 +98,12 @@ The following command creates a new stack by using the cloudformation.json templ
 
     (env)$ aws cloudformation deploy --template deployment/cloudformation.json --stack-name my-unicorn
 
+You can view the stack's process in your AWS CloudFormation Console
+![Console](images/console3.png)
+
 Now, jump over to your crubcrud dashboard at `https://crudcrud.com/api/<Your API KEY>/unicorns` to see your new unicorn!
 
-![unicorn](images/dashboard.png)
+![Dashboard](images/dashboard.png)
 
 ## Step 7: Update your Unicorn
 CloudFormation handles the lifecycle of our unicorns. So lets change the name of the unicorn by updating the CloudFormation stack.
@@ -111,7 +114,7 @@ The following command updates the stack and changes the unicorn name
 
 jump over to your crubcrud dashboard at `https://crudcrud.com/api/<Your API KEY>/unicorns` to see your updated unicorn!
 
-![unicorn](images/dashboard2.png)
+![Dashboard](images/dashboard2.png)
 ## Step 8: Delete your Unicorn
 When you delete an AWS CloudFormation Stack, the resource is deleted too.
 
