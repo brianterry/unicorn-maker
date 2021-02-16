@@ -2,8 +2,8 @@
 
 The unicorn-maker project is a repository that contains an end-to-end example of an AWS Cloudformation resource type.
 
-The CloudFormation Command Line Interface (CLI) is an open-source tool that enables you to develop and test AWS and third-party resource types and register them for use in AWS CloudFormation.
-
+The [CloudFormation Command Line Interface (CLI)](https://github.com/aws-cloudformation/cloudformation-cli) is an open-source tool that enables you to develop and test AWS and third-party resource types and register them for use in AWS CloudFormation.
+]
 
 
 
@@ -38,7 +38,7 @@ Now, install the AWS CloudFormation CLI and language plugins:
     (env)$ pip install cloudformation-cli cloudformation-cli-java-plugin cloudformation-cli-go-plugin cloudformation-cli-python-plugin
 
 ## Step 2: Choose Your Path
-What's great about creating an AWS CloudFormation provider is you can write it in JAVA, Go, Python, TypeScript.
+What's great about creating an AWS CloudFormation provider is you can write it in JAVA, Go, Python, or TypeScript.
 
 In this repo, you will find a folder that contains an example resource type built in the following languages:
 
@@ -50,7 +50,7 @@ In this repo, you will find a folder that contains an example resource type buil
 
 Java (Coming soon)
 
-No matter what path you choose, the resource design is the same. That way, you can use this project as a "rosetta stone."
+No matter what path you choose, the resource design is the same. You can use this project as a "rosetta stone."
 
 For example, if you are good at Go and want to learn how to create a Python provider, compare the projects.
 
@@ -63,7 +63,7 @@ Let's setup the backend. Start by going to [https://crudcrud.com/](https://crudc
 ![crudcrud](images/crudcrud-key.png)
 
 
-Copy API key, you well need this in the next step.
+Copy the API key, you well need this in the next step.
 
 
 ## Step 4: Build the Resource Type
@@ -92,7 +92,7 @@ After a few minutes, the `Brianterry::Unicorn::Maker` resource will be displayed
 ![Console](images/console.png)
 
 ## Step 6: Create a Unicorn
-Using the [CloudFormation](deployment/cloudformation.json) template in the deployment folder, create new stack that contains a uncorn:
+Using the [CloudFormation](deployment/cloudformation.json) template in the deployment folder, create new stack that contains a unicorn:
 
 The following command creates a new stack by using the cloudformation.json template.
 
