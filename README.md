@@ -24,9 +24,14 @@ You can build the resource type with one of four languages: Java, Go, Python, an
 
 First, start by installing the AWS Cloudformation CLI and the language plugins.
 
-Although not necessary, I recommend creating a Python virtual environment. It makes getting started a little easier.
+Although not necessary, I recommend creating a Python virtual environment. It makes getting started a little easier:
 
-    git clone https://github.com/brianterry/unicorn-maker.git
+    $ python3 -m venv env
+    $ source env/bin/activate
+
+Now, install the AWS CloudFormation CLI and language plugins:
+
+    (env)$ pip install cloudformation-cli cloudformation-cli-java-plugin cloudformation-cli-go-plugin cloudformation-cli-python-plugin
 
 ## Step 2: Choose Your Path
 What's great about creating an AWS CloudFormation provider is you can write it in JAVA, Go, Python, TypeScript.
@@ -47,7 +52,7 @@ For example, if you are good at Go and want to learn how to create a Python prov
 
 
 ## Step 3: Configure The Backend Service
-This is provider uses [CrudCrud](https://crudcrud.com/) as the backend, enabling you to focus on provider creation instead of standing up an API.
+This provider uses [CrudCrud](https://crudcrud.com/) as the backend, enabling you to focus on provider creation instead of standing up an API.
 
 Let's setup the backend. Start by going to [https://crudcrud.com/](https://crudcrud.com/) and obtain a CrudCrud API key. Don't worry—the free version provides more than enough requests to play with this example.
 
