@@ -6,6 +6,6 @@
     "testEntrypoint": "brianterry_unicorn_maker.handlers.test_entrypoint",
     "settings": {
         "use_docker": false,
-        "protocolVersion": "1.0.0"
+        "protocolVersion": "2.0.0"
     }
 }
